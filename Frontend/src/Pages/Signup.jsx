@@ -13,7 +13,7 @@ function Signup() {
     <>
      <div className='h-screen flex items-center justify-center bg-slate-900'>
 
-      <div className='bg-black p-8   transform-[perspective(1000px)_rotateY(4deg)] transition duration-300 hover:transform-[perspective(1000px)_rotateY(0deg)_translateY(-6px)]'>
+       <div className='bg-black p-8 border border-gray-700 '>
         <div className='text-5xl font-extrabold tracking-widest text-center text-white py-1'>CODE ARENA</div>
         <p className='text-2xl text-red-500 font-semibold tracking-wider py-4 flex justify-center items-center'>SIGNUP TO YOUR ACCOUNT</p>
 
@@ -37,7 +37,7 @@ function Signup() {
             </div>
 
             <div className='py-3'>
-            <label className='text-white '>PASSWORD</label>
+            <label className='text-white'>PASSWORD</label>
             <input className='w-full mt-1 px-4 py-2  bg-slate-700 text-white outline-none focus:ring-1 focus:ring-red-500'
             type='password'
             value={password}
@@ -45,7 +45,7 @@ function Signup() {
             </input>
             </div>
 
-            <button className='w-full mt-4 py-3 text-black bg-red-500  font-semibold hover:text-white hover:bg-red-700' type='submit'>SIGNUP</button>
+            <button className='w-full mt-4 py-3 text-black bg-red-500  font-bold tracking-wider  hover:text-white hover:bg-red-700' type='submit'>SIGNUP</button>
         </form>
        </div>
     </div>

@@ -13,8 +13,8 @@ function Login() {
   <>
     <div className='h-screen flex items-center justify-center bg-gray-900'>
 
-      <div className='bg-black p-8   transform-[perspective(1000px)_rotateY(4deg)] transition duration-300 hover:transform-[perspective(1000px)_rotateY(0deg)_translateY(-6px)]'>
-        <div className='text-5xl font-extrabold tracking-widest text-center text-white py-1 [text-shadow:0_0_2px_white]'>CODE ARENA</div>
+       <div className='bg-black p-8 border border-gray-700'>
+        <div className='text-5xl font-extrabold tracking-widest text-center text-white py-1'>CODE ARENA</div>
         <p className='text-2xl text-red-500 font-semibold tracking-wider py-4 flex justify-center items-center'>LOGIN TO YOUR ACCOUNT</p>
 
         <form className='mt-6 space-y-4' onSubmit={handleSubmit}>
@@ -36,7 +36,7 @@ function Login() {
             </input>
             </div>
 
-            <button className='w-full mt-4 py-3 text-black bg-red-500  font-semibold  hover:text-white hover:bg-red-700' type='submit'>LOGIN</button>
+            <button className='w-full mt-4 py-3 text-black bg-red-500 font-bold tracking-wider  hover:text-white hover:bg-red-700' type='submit'>LOGIN</button>
         </form>
        </div>
     </div>

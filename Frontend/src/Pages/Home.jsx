@@ -18,7 +18,7 @@ function Home() {
       <div className='w-1/2 max-h-screen bg-black text-white flex flex-col justify-start gap-8 z-2 p-[5%]'>
         {/* for left side of the screen */}
         <div>
-          <h1 className="text-9xl font-extrabold tracking-widest py-2  text-white  [text-shadow:4px_4px_8px_red]">
+          <h1 className="text-9xl font-extrabold tracking-widest py-2">
                   CODE ARENA
           </h1>
           <h2 className="text-3xl text-red-500 font-semibold tracking-wider">
@@ -43,11 +43,11 @@ function Home() {
           </button>
         </div>
       </div>
-      <div className='w-4 bg-white z-10 shadow-[0_0_18px_rgba(255,255,255,0.95),0_0_34px_rgba(255,255,255,0.65)]'>
-        {/* for the white tilted line in center */}
+      <div className='w-4 bg-white'>
+        {/* for the tilted line in center */}
       </div>
-      <div className='w-4 bg-red-500 z-10 shadow-[0_0_20px_rgba(239,68,68,0.95),0_0_40px_rgba(239,68,68,0.7)]'>
-        {/* for the red tilted line in center */}
+      <div className='w-4 bg-red-600 '>
+        {/* for the tilted line in center */}
       </div>
 
 

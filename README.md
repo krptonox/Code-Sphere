@@ -52,7 +52,7 @@ This documentation summarizes what has been implemented so far in both backend a
 ## Project Structure
 
 ```text
-Code-Arena/
+Code-Sphere/
   Backend/
     index.js
     app.js
@@ -126,7 +126,7 @@ Response (sample):
 
 ```bash
 git clone https://github.com/krptonox/Code-Sphere.git
-cd Code-Arena
+cd Code-Sphere
 ```
 
 ## 2) Backend setup

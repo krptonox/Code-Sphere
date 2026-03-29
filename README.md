@@ -1,4 +1,4 @@
-# Code-Arena
+# Code-Sphere
 
 Code-Arena is a MERN-style project in progress with a React frontend and a Node.js + Express backend.
 

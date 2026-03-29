@@ -80,6 +80,7 @@ This folder contains the MongoDB connection setup for the backend.
   - Problem: app printed Atlas server-selection error despite whitelist setup.
   - Cause: local/ISP/network path could not open TCP 27017 to Atlas nodes.
   - Fix: validated SRV DNS and TCP connectivity; identified network/firewall restriction as root issue.
+  - Connection Error due to GLA wifi, use VPN for it, otherwise it shows IP address not whitelisted error on terminal.
 
 ## What to Check If Connection Fails Again
 

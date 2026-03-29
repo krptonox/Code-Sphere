@@ -13,6 +13,20 @@ This documentation summarizes what has been implemented so far in both backend a
 - Updated frontend ignore rules in `Frontend/.gitignore` with clearer dependency, build, cache, and environment exclusions.
 - Repository cleanup and git tracking alignment were reviewed before push.
 
+## Latest Updates (2026-03-30)
+
+- Standardized backend module usage to CommonJS for startup compatibility.
+- Added and documented dedicated MongoDB connector flow:
+  - `Backend/src/DataBase/db.js`
+  - `Backend/constant.js`
+- Added detailed database setup and troubleshooting guide:
+  - `Backend/src/DataBase/README.md`
+- Improved dotenv usage notes (`#` comment style in env files).
+- Investigated Atlas connection failures and identified practical troubleshooting path:
+  - verify cluster status is `Active`
+  - verify DB user credentials and network access rules
+  - verify local network allows outbound TCP `27017`
+
 ## Current Progress
 
 ### Backend (implemented)
@@ -23,6 +37,7 @@ This documentation summarizes what has been implemented so far in both backend a
   - `GET /` -> returns `Code-Arena`
 - Demo jokes API:
   - `GET /api/jokes` -> returns a static jokes array
+- MongoDB connection module wired into backend startup
 - MongoDB modeling started with Mongoose (feed + user domain schemas)
 - Backend package setup with scripts:
   - `npm run dev`
@@ -148,7 +163,8 @@ npm install
 Create `.env` in `Backend/`:
 
 ```env
-PORT=3000
+PORT=8000
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster-host>
 ```
 
 Run backend:
@@ -166,7 +182,7 @@ npm run dev
 ```
 
 Frontend default: `http://localhost:5173`
-Backend default: `http://localhost:3000`
+Backend default: `http://localhost:8000`
 
 ## What Is Next (recommended)
 

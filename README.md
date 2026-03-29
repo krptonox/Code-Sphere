@@ -4,6 +4,15 @@ Code-Arena is a MERN-style project in progress with a React frontend and a Node.
 
 This documentation summarizes what has been implemented so far in both backend and frontend.
 
+## Latest Updates (2026-03-29)
+
+- Added Prettier to backend dev dependencies for consistent code formatting.
+- Added backend formatter configuration files:
+  - `Backend/.prettierrc`
+  - `Backend/.prettierignore`
+- Updated frontend ignore rules in `Frontend/.gitignore` with clearer dependency, build, cache, and environment exclusions.
+- Repository cleanup and git tracking alignment were reviewed before push.
+
 ## Current Progress
 
 ### Backend (implemented)

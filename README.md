@@ -15,12 +15,16 @@ This documentation summarizes what has been implemented so far in both backend a
 
 ## Latest Updates (2026-03-30)
 
-- Standardized backend module usage to CommonJS for startup compatibility.
+- Standardized backend module usage to ESM for startup compatibility.
 - Added and documented dedicated MongoDB connector flow:
   - `Backend/src/DataBase/db.js`
   - `Backend/constant.js`
 - Added detailed database setup and troubleshooting guide:
   - `Backend/src/DataBase/README.md`
+- Added backend utility response/error standards:
+  - `Backend/src/Utils/ApiError.js`
+  - `Backend/src/Utils/ApiResponse.js`
+  - `Backend/src/Utils/README.md`
 - Improved dotenv usage notes (`#` comment style in env files).
 - Investigated Atlas connection failures and identified practical troubleshooting path:
   - verify cluster status is `Active`
@@ -38,6 +42,7 @@ This documentation summarizes what has been implemented so far in both backend a
 - Demo jokes API:
   - `GET /api/jokes` -> returns a static jokes array
 - MongoDB connection module wired into backend startup
+- Utility classes created for consistent API success/error payloads
 - MongoDB modeling started with Mongoose (feed + user domain schemas)
 - Backend package setup with scripts:
   - `npm run dev`
@@ -202,7 +207,7 @@ Create `.env` in `Backend/`:
 
 ```env
 PORT=8000
-MONGODB_URI=mongodb+srv://<username>:<password>@<cluster-host>
+MONGO_URI=mongodb+srv://<username>:<password>@<cluster-host>
 ```
 
 Run backend:
@@ -224,12 +229,12 @@ Backend default: `http://localhost:8000`
 
 ## What Is Next (recommended)
 
-- Connect MongoDB in backend startup flow
 - Create auth APIs for signup/login
 - Wire Mongoose models to controllers and routes
 - Enable proper routing in frontend `App.jsx`
 - Replace static jokes with DB-backed content
 - Add validation/error handling for all request bodies
+- Use `ApiError`, `ApiResponse`, and `asyncHandler` in controllers for uniform API behavior
 
 ## Notes
 

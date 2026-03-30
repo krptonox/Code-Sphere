@@ -1,8 +1,13 @@
 // It is same as main.jsx in react , index.js start the server And it is used to connect DataBase
 
-require('dotenv').config() //dotenv is a zero-dependency module that loads environment variables from a .env file into process.env. This allows you to keep sensitive information, such as database credentials or API keys, separate from your codebase and easily manage them across different environments (development, testing, production).
+import dotenv from 'dotenv'
+dotenv.config() //dotenv is a zero-dependency module that loads environment variables from a .env file into process.env. This allows you to keep sensitive information, such as database credentials or API keys, separate from your codebase and easily manage them across different environments (development, testing, production).
 
-const express = require('express')
+// Resolved startup issue: backend now uses one module system (ESM) consistently.
+import connectDB from "./src/DataBase/db.js";
+connectDB() //connectDB is a function that connects to the MongoDB database using the mongoose library. It uses the MONGO_URI environment variable to establish the connection.
+
+import express from 'express'
 const app = express()  //app has all functionality of express
 const port = process.env.PORT || 5000 //port number on which our server will run
 

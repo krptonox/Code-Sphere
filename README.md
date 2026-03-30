@@ -35,13 +35,51 @@ This documentation summarizes what has been implemented so far in both backend a
   - Login
   - Signup
   - Jokes
+- React Router setup with `BrowserRouter` in `src/main.jsx`
 - `Jokes` page fetches backend data from `/api/jokes` using Axios
 - `Home` includes a toggle between login and signup UI
 
 ### Frontend (in progress)
 
-- Routing is imported but not actively used in `App.jsx`
+- More routes/pages can be added in `App.jsx` as features grow
 - Login/Signup currently log form input in console (no auth integration yet)
+
+## Common Frontend Error and Fix
+
+### Error
+
+If you see this in browser console:
+
+```text
+Uncaught Error: useRoutes() may be used only in the context of a <Router> component.
+```
+
+### Why It Happens
+
+`<Routes />` (or hooks like `useRoutes`) only works when the app is wrapped in a Router provider.
+If `App` renders `<Routes />` directly but `main.jsx` does not wrap `<App />` with `BrowserRouter`, React Router throws this error.
+
+### How It Was Resolved
+
+`src/main.jsx` was updated to wrap `<App />` inside `<BrowserRouter>`:
+
+```jsx
+import { BrowserRouter } from "react-router-dom";
+
+createRoot(document.getElementById("root")).render(
+  <StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </StrictMode>,
+);
+```
+
+### Quick Checklist
+
+- Make sure `react-router-dom` is installed.
+- Wrap root app with `BrowserRouter` in `main.jsx`.
+- Keep `<Routes>` and `<Route>` inside components rendered under that router.
 
 ## Tech Stack
 

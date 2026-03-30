@@ -10,13 +10,13 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    // <Routes>
-    //   <Route path="/" element={<Home />}></Route>
-    // </Routes>
-    <>
-     <Home></Home>
-     <Jokes></Jokes>
-    </>
+    <Routes>
+      <Route path="/" element={<Home />}></Route>
+    </Routes>
+    // <>
+    //  <Home></Home>
+    //  <Jokes></Jokes>
+    // </>
   )
 }
 

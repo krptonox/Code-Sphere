@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const friendshipSchema = new mongoose.Schema({
-    id: {type:Number, required: true}, // The 'id' field is of type Number and is required. It serves as a unique identifier for each friendship record.
+    // id: {type:Number, required: true}, // The 'id' field is of type Number and is required. It serves as a unique identifier for each friendship record.
 
     status: {type:String, required:true}, // The 'status' field is of type String and is required. It indicates the status of the friendship, such as "pending", "accepted", or "rejected".
 

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const userStatsSchema = new mongoose.Schema({
-    id: {type:Number, required: true}, // The 'id' field is of type Number and is required. It serves as a unique identifier for each user statistics record.
+    // id: {type:Number, required: true}, // The 'id' field is of type Number and is required. It serves as a unique identifier for each user statistics record.
 
     total_solved: {type:Number, default: 0}, // The 'total_solved' field is of type Number and has a default value of 0. It keeps track of the total number of problems solved by the user.
 

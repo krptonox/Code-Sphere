@@ -1,7 +1,7 @@
 import mongoose from "mongoose";  // Importing the mongoose library to define the schema and model for the User collection in MongoDB.
 
 const userSchema = new mongoose.Schema({  // Defining the schema for the User collection.
-    id: {type: Number , required: true},  // The 'id' field is of type Number and is required.
+    // id: {type: Number , required: true},  // The 'id' field is of type Number and is required.
 
     username: {type: String, required:true}, // The 'username' field is of type String and is required.
 

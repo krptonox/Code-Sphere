@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const platformConnectionSchema = new mongoose.Schema({
-    id: {type:Number, required: true}, // The 'id' field is of type Number and is required. It serves as a unique identifier for each platform connection record.
+    // id: {type:Number, required: true}, // The 'id' field is of type Number and is required. It serves as a unique identifier for each platform connection record.
 
     platform_name: {type:String, required:true}, // The 'platform_name' field is of type String and is required. It stores the name of the platform to which the user has connected their account.
 

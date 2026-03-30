@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const emailVerificationSchema = new mongoose.Schema({
-    id: {type: Number, required: true}, // The 'id' field is of type Number and is required. It serves as a unique identifier for each email verification record.
+    // id: {type: Number, required: true}, // The 'id' field is of type Number and is required. It serves as a unique identifier for each email verification record.
 
     token: {type: String, required: true}, // The 'token' field is of type String and is required. It stores the unique token generated for email verification purposes.
 

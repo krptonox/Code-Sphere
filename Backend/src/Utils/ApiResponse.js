@@ -8,3 +8,7 @@ class ApiResponse {
 }
 
 export default ApiResponse;
+
+
+//what is this file for?
+//This file defines a class called ApiResponse that is used to create standardized response objects for API endpoints. It includes properties such as statusCode, data, message, and success to provide a consistent structure for API responses. This helps in improving the readability and maintainability of the code when handling API responses in the backend of an application.

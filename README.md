@@ -31,6 +31,40 @@ This documentation summarizes what has been implemented so far in both backend a
   - verify DB user credentials and network access rules
   - verify local network allows outbound TCP `27017`
 
+## Latest Updates (2026-04-01)
+
+- **Installed `mongoose-aggregate-paginate-v2`:**
+  - Package for implementing pagination in MongoDB aggregation queries
+  - Enables efficient handling of large datasets with next/previous page navigation
+  - Will be used for feed operations with large datasets
+
+- **Finalized User Authentication Schema:**
+  - Completed `Backend/src/Models/Users/users.model.js` with full authentication support
+  - Integrated password hashing via bcryptjs with pre-save middleware
+  - Implemented JWT-based authentication with access and refresh token generation
+  - Added email verification tracking field (`email_Verified`)
+  - Added refresh token storage field for session management
+  - Added timestamps for automatic `createdAt` and `updatedAt` tracking
+
+- **Created comprehensive Users Model Documentation:**
+  - `Backend/src/Models/Users/README.md` - Full documentation covering:
+    - Schema field definitions and purposes
+    - Password hashing implementation and security
+    - Access token generation (1-day expiration)
+    - Refresh token generation (10-day expiration)
+    - Authentication flow overview
+    - Required environment variables
+    - Dependencies (mongoose, bcryptjs, jsonwebtoken)
+
+- **Environment Configuration:**
+  - Configured JWT secrets and expiration times in `.env`:
+    - `ACCESS_TOKEN_SECRET` - Secret for access token signing
+    - `ACCESS_TOKEN_EXPIRES_IN=1d` - Short-lived access tokens
+    - `REFRESH_TOKEN_SECRET` - Secret for refresh token signing
+    - `REFRESH_TOKEN_EXPIRES_IN=10d` - Long-lived refresh tokens
+  - Configured MongoDB connection with Atlas credentials
+  - Configured CORS origin to frontend URL (`http://localhost:5173`)
+
 ## Current Progress
 
 ### Backend (implemented)

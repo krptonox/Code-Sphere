@@ -14,7 +14,7 @@ import { request } from "express";
 //We will do using Promise and .then() and .catch() instead of async await and try catch block because it is more cleaner and easier to read.
 
 const asyncHandler = (requestHandler) => {
-    (req,res,next) => {
+    return (req, res, next) => {
         Promise.resolve(requestHandler(req, res, next)).catch((err) => next(err))
     }
 }

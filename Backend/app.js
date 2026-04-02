@@ -57,5 +57,12 @@ app.get('/api/jokes', (req, res) => {
 })
 
 
+//routes import 
+import userRoutes from './src/Routes/user.routes.js'
+
+//routes declaration
+app.use('/api/users', userRoutes)
+
+
 
 export default app

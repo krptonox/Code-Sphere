@@ -65,6 +65,30 @@ This documentation summarizes what has been implemented so far in both backend a
   - Configured MongoDB connection with Atlas credentials
   - Configured CORS origin to frontend URL (`http://localhost:5173`)
 
+## Latest Updates (2026-04-02)
+
+- **Fixed backend route module resolution error (`ERR_MODULE_NOT_FOUND`):**
+  - Updated user route import path in `Backend/app.js`
+  - Before: `./Routes/user.routes.js`
+  - After: `./src/Routes/user.routes.js`
+  - Why: route file exists in `Backend/src/Routes`, so the previous path pointed to a non-existent location
+
+- **Fixed controller async handler import mismatch:**
+  - Updated `Backend/src/Controllers/users.controllers.js`
+  - Before: `import { asynchandler } from "../Utils/asyncHandler.js"`
+  - After: `import asyncHandler from "../Utils/asyncHandler.js"`
+  - Why: `asyncHandler` is exported as default, not a named export
+
+- **Improved internal backend documentation:**
+  - Expanded `Backend/src/Routes/README.md`
+  - Expanded `Backend/src/Controllers/README.md`
+  - Added details for what is implemented, how wiring works, why this architecture is used, and how it supports future growth
+
+- **Future impact of these fixes:**
+  - Backend boots reliably without route import crashes
+  - Async controller errors are handled consistently
+  - Onboarding and feature extension become easier due to clearer module docs
+
 ## Current Progress
 
 ### Backend (implemented)

@@ -4,9 +4,7 @@ import ApiResponse from "../Utils/ApiResponse.js";
 import {User} from "../Models/Users/users.model.js";
 
 const registerUser = asyncHandler(async (req, res) => {
-    //  res.status(200).json({
-    //     message: "User registered successfully"
-    //  })
+ 
     //get data from user
     //Validation of data
     //check if user already exists
@@ -17,8 +15,16 @@ const registerUser = asyncHandler(async (req, res) => {
     //check for user creation success and send response
 
     //Step 1: Get data from user
-    const {username, email, password} = req.body;
+    // Support JSON, urlencoded and multipart form-data, and tolerate common key variants from clients.
+    const body = req.body || {};
+    const username = String(body.username ?? body.userName ?? body.name ?? "").trim();
+    const email = String(body.email ?? "").trim();
+    const password = String(body.password ?? "").trim();
+    // Log the received values for debugging purposes. In production, consider removing or masking sensitive information like passwords.
+    
     console.log("email: ",email);
+    console.log("username: ",username);
+    console.log("password: ",password);
     if(!username || !email || !password){
         throw new ApiError(400, "All fields are required")
     }
@@ -36,7 +42,8 @@ const registerUser = asyncHandler(async (req, res) => {
         password
     });
 
-    const createdUser = await user.findById(user._id).select("-password -refreshToken") // This line retrieves the created user from the database using their unique identifier (user._id) and excludes the password and refreshToken fields from the result. The select() method is used to specify which fields to include or exclude in the query result. In this case, it excludes the password and refreshToken fields for security reasons, ensuring that sensitive information is not sent back in the response.
+    // Query with the model, not the created document instance, to avoid runtime method errors.
+    const createdUser = await User.findById(user._id).select("-refreshToken") // This line retrieves the created user from the database using their unique identifier (user._id) and excludes the password and refreshToken fields from the result. The select() method is used to specify which fields to include or exclude in the query result. In this case, it excludes the password and refreshToken fields for security reasons, ensuring that sensitive information is not sent back in the response.
 
     if(!createdUser){
         throw new ApiError(500, "User registration failed")

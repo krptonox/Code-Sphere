@@ -19,6 +19,36 @@ This folder contains request-handling logic for API endpoints.
   - After: default import `ApiError`
   - Why: `ApiError` is exported as default from `src/Utils/ApiError.js`
 
+## Latest Controller Updates (2026-04-03)
+
+- Improved request body handling in `users.controllers.js`:
+  - Added safe fallback for missing body (`req.body || {}`).
+  - Why: prevented runtime crash when body was undefined.
+
+- Added input normalization for register payload:
+  - Maps `username`, `userName`, or `name` to a normalized `username` value.
+  - Trims `username`, `email`, and `password` before validation.
+  - Why: Postman/client payload key differences caused false validation failures.
+
+- Kept strict validation for required fields:
+  - Throws `ApiError(400, "All fields are required")` when any required value is empty.
+  - Why: avoids creating invalid user records.
+
+- Fixed created-user fetch query usage:
+  - Before: `user.findById(user._id)`
+  - After: `User.findById(user._id)`
+  - Why: `findById` is a model static method, not a document instance method.
+
+## Problems Faced in Controller Layer
+
+1. `Cannot destructure property 'username' of 'req.body' as it is undefined`
+   - Root cause: request body missing/not parsed.
+   - Resolution: added safe body fallback and route-level multipart parsing.
+
+2. `All fields are required` even when form looked filled
+   - Root cause: username key mismatch (`userName`/`name` vs `username`) or empty trimmed values.
+   - Resolution: normalized accepted key variants and trimmed inputs before validation.
+
 ## How controller flow works
 
 1. Route receives request (for example, `POST /api/users/register`).

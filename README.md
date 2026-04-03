@@ -89,6 +89,43 @@ This documentation summarizes what has been implemented so far in both backend a
   - Async controller errors are handled consistently
   - Onboarding and feature extension become easier due to clearer module docs
 
+## Latest Updates (2026-04-03)
+
+- **Stabilized user registration request parsing and validation:**
+  - Updated `Backend/src/Routes/user.routes.js` to use `multer` `upload.none()` on auth routes.
+  - Why: Postman `form-data` requests were not being parsed into `req.body` by `express.json()`/`express.urlencoded()` alone.
+
+- **Hardened input normalization in registration controller:**
+  - Updated `Backend/src/Controllers/users.controllers.js` to normalize and trim inputs.
+  - Added fallback key mapping for `username`, `userName`, and `name`.
+  - Why: clients sometimes send non-standard field keys; normalization prevents false validation failures.
+
+- **Fixed created user lookup call in controller:**
+  - Updated `Backend/src/Controllers/users.controllers.js` from `user.findById(...)` to `User.findById(...)`.
+  - Why: `findById` is a model static method, not a document instance method.
+
+- **Fixed Mongoose password hash middleware runtime error:**
+  - Updated `Backend/src/Models/Users/users.model.js` pre-save hook to promise-style async middleware (without `next`).
+  - Why: mixing `async` middleware with `next()` caused `TypeError: next is not a function`.
+
+## Problems Faced and Resolutions
+
+1. **Error:** `Cannot destructure property 'username' of 'req.body' as it is undefined`
+   - **Root cause:** request body missing/not parsed.
+   - **Fix:** added safe body fallback in controller and ensured route-level parsing for form-data.
+
+2. **Error:** `All fields are required`
+   - **Root cause:** `username` key mismatch or missing value in Postman payload.
+   - **Fix:** normalized input and accepted common key aliases (`username`, `userName`, `name`) plus trim checks.
+
+3. **Error:** `TypeError: next is not a function` in user model pre-save hook
+   - **Root cause:** invalid middleware signature using `async function(next)` with `next()`.
+   - **Fix:** converted to pure async pre-save hook and returned early when password is unchanged.
+
+4. **Error-prone pattern:** using document instance for static model query method
+   - **Root cause:** `user.findById(...)` used instead of `User.findById(...)`.
+   - **Fix:** switched to model static query.
+
 ## Current Progress
 
 ### Backend (implemented)

@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";  // Importing the bcryptjs library to handle pass
 
 import jwt from "jsonwebtoken";  // Importing the jsonwebtoken library to handle JSON Web Tokens (JWT) for user authentication. This library allows us to create and verify JWTs, which can be used to securely transmit information between parties and manage user sessions in a stateless manner.
 
+
 const userSchema = new mongoose.Schema({  // Defining the schema for the User collection.
     // id: {type: Number , required: true},  // The 'id' field is of type Number and is required.
 
@@ -25,14 +26,9 @@ const userSchema = new mongoose.Schema({  // Defining the schema for the User co
 })
 
 
-userSchema.pre("save", async function(next) {
-    if(this.isModified("password")){ // This checks if the password field has been modified. If it hasn't been modified, it calls the next() function to proceed without hashing the password again.
-    this.password = await bcrypt.hash(this.password, 10)
-    next()
-    }
-    else{
-        return next() // If the password has not been modified, it simply calls next() to proceed without hashing the password again.
-    }
+userSchema.pre("save", async function() {
+  if(!this.isModified("password")) return; // Skip re-hashing when password is unchanged.
+  this.password = await bcrypt.hash(this.password, 10)
 })
 
 userSchema.methods.isPasswordCorrect = async function(password){
@@ -70,7 +66,7 @@ userSchema.methods.generateRefreshToken = function() {
 export const User = mongoose.model("User",    userSchema) // Creating a model named "User" using the defined schema and exporting it for use in other parts of the application.
 
 
-
+ 
 
 
 //why const user , not directly export UserSchema ?

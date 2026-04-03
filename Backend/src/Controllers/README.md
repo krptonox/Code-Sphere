@@ -1,86 +1,110 @@
-# Controllers Layer
+# Controllers README (Hinglish Guide)
 
-This folder contains request-handling logic for API endpoints.
+Yeh folder backend ka "dimaag" hai.
+Simple words me: route request pakadta hai, controller decide karta hai "ab kya karna hai".
 
-## What has been done so far
+## Controllers kya hote hain?
 
-- Created user controller module: `users.controllers.js`
-- Added `registerUser` controller as the first user action handler.
-- Integrated async error wrapper through `asyncHandler`.
-- Fixed async wrapper import mismatch:
-  - Before: named import `asynchandler`
-  - After: default import `asyncHandler`
-- Fixed users model path mismatch in controller:
-  - Before: `../Models/Users/user.model.js`
-  - After: `../Models/Users/users.model.js`
-  - Why: actual model file name is `users.model.js`
-- Fixed `ApiError` import style mismatch:
-  - Before: named import `{ ApiError }`
-  - After: default import `ApiError`
-  - Why: `ApiError` is exported as default from `src/Utils/ApiError.js`
+Controller wo function hota hai jo request receive karke:
 
-## Latest Controller Updates (2026-04-03)
+- input validate karta hai
+- database/model se baat karta hai
+- success ya error response bhejta hai
 
-- Improved request body handling in `users.controllers.js`:
-  - Added safe fallback for missing body (`req.body || {}`).
-  - Why: prevented runtime crash when body was undefined.
+Is project me main controller file:
 
-- Added input normalization for register payload:
-  - Maps `username`, `userName`, or `name` to a normalized `username` value.
-  - Trims `username`, `email`, and `password` before validation.
-  - Why: Postman/client payload key differences caused false validation failures.
+- `src/Controllers/users.controllers.js`
 
-- Kept strict validation for required fields:
-  - Throws `ApiError(400, "All fields are required")` when any required value is empty.
-  - Why: avoids creating invalid user records.
+## Is folder ko kyun banaya?
 
-- Fixed created-user fetch query usage:
-  - Before: `user.findById(user._id)`
-  - After: `User.findById(user._id)`
-  - Why: `findById` is a model static method, not a document instance method.
+Agar saara logic route file me likh doge to code bahut messy ho jayega.
+Isliye alag layer banayi gayi:
 
-## Problems Faced in Controller Layer
+- routes sirf endpoint mapping kare
+- controllers business logic handle kare
+- maintain karna easy ho
 
-1. `Cannot destructure property 'username' of 'req.body' as it is undefined`
-   - Root cause: request body missing/not parsed.
-   - Resolution: added safe body fallback and route-level multipart parsing.
+## Current controller functions (easy explanation)
 
-2. `All fields are required` even when form looked filled
-   - Root cause: username key mismatch (`userName`/`name` vs `username`) or empty trimmed values.
-   - Resolution: normalized accepted key variants and trimmed inputs before validation.
+`users.controllers.js` me abhi ye major functions hain:
 
-## How controller flow works
+1. `registerUser`
 
-1. Route receives request (for example, `POST /api/users/register`).
-2. Route calls controller method from this folder.
-3. Controller runs inside `asyncHandler`.
-4. Any async error is passed to Express error middleware through `next(err)`.
+- New user ka data leta hai (`username/email/password`)
+- required fields check karta hai
+- check karta hai user pehle se exist to nahi
+- user create karta hai
+- safe response return karta hai (password aur refresh token hide)
 
-## Why this structure is used
+2. `loginUser`
 
-- Separates request lifecycle logic from route declarations.
-- Reduces repeated try/catch blocks in every controller method.
-- Improves consistency of API behavior and debugging.
+- email ya username + password se user find karta hai
+- password verify karta hai
+- access token + refresh token generate karta hai
+- cookies set karke login response deta hai
 
-## Where to use controllers
+3. `logoutUser`
 
-- Use this folder for all endpoint request handlers (users, auth, feed, groups, profiles).
-- Keep route files only for endpoint mapping; move business logic into controller methods.
-- Use utility wrappers (`asyncHandler`, `ApiError`, and response helpers) inside controllers for consistent API behavior.
-- Use controllers as the integration point between request input and model/service/database operations.
+- logged-in user ka refresh token remove karta hai
+- auth cookies clear karta hai
+- logout success response bhejta hai
 
-## How to use this pattern
+## Kahan use ho raha hai?
 
-1. Create a controller function for each API action (`registerUser`, `loginUser`, etc.).
-2. Wrap each async controller in `asyncHandler`.
-3. Validate request data early and throw `ApiError` for bad input/conflicts.
-4. Call model/service methods for DB work.
-5. Return safe response data (exclude password and tokens unless needed).
-6. Export controller methods and map them in the related route file.
+Controller functions route layer se call ho rahe hain:
 
-## How this helps in future
+- `registerUser` -> `POST /api/users/register`
+- `loginUser` -> `POST /api/users/login`
+- `logoutUser` -> `POST /api/users/logout` (auth required)
 
-- Easier to add validation, service calls, and DB operations per action.
-- Better maintainability as auth features expand (register, login, refresh, logout).
-- Lower risk of unhandled promise rejections in async APIs.
-- Faster onboarding because import patterns and controller responsibilities are now explicitly documented.
+Mapping file:
+
+- `src/Routes/user.routes.js`
+
+## Controller ka request flow
+
+1. Client request bhejta hai (Postman/Frontend).
+2. Route match hota hai.
+3. Route controller function call karta hai.
+4. Controller input check karta hai.
+5. Controller model/database se operation karta hai.
+6. Controller `ApiResponse` ke through final response bhejta hai.
+7. Error aaye to `ApiError` + `asyncHandler` flow handle karta hai.
+
+## Utilities jo controller ke saath use ho rahi hain
+
+- `asyncHandler`: async function errors ko safely pass karta hai.
+- `ApiError`: standard error response banane ke liye.
+- `ApiResponse`: standard success response format ke liye.
+- `User` model: database me user read/write karne ke liye.
+
+## Important improvements jo already kiye gaye
+
+- body safe fallback add hua: `req.body || {}`
+- username normalization add hua: `username/userName/name` handle karta hai
+- trim logic add hua: blank spaces wali values reject hoti hain
+- created user fetch model ke through fix hua: `User.findById(...)`
+
+## Common mistakes jo avoid karne hain
+
+- Route me heavy logic mat likho, controller me rakho.
+- Sensitive data (password, refreshToken) response me mat bhejo.
+- Validation skip mat karo.
+- Async controller ko `asyncHandler` ke bina mat chalao.
+
+## New controller add karna ho to quick steps
+
+1. `src/Controllers/...controllers.js` me function banao.
+2. Input validate karo.
+3. Model call karo.
+4. `ApiResponse` ya `ApiError` use karo.
+5. Function export karo.
+6. Route file me map karo.
+
+## Future me revise karte time yaad rakhna
+
+- "Route = path map"
+- "Controller = actual kaam"
+- "Model = database"
+
+Yeh 3-layer approach follow karoge to code samajhna, debug karna, aur scale karna bahut easy ho jata hai.

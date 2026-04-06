@@ -1,13 +1,38 @@
 import React from 'react'
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { signupUser } from '../services/authService';
 
 function Signup() {
     const [Email,setEmail] = useState('')
     const [password,setPassword] = useState('')
     const [username,setUsername] = useState('')
-     const handleSubmit = (e) =>{
-        e.preventDefault();
-        console.log("SIGNUP: ",Email +" "+ password+" "+username)
+    const [isLoading, setIsLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
+    const navigate = useNavigate()
+
+    const handleSubmit = async (e) => {
+      e.preventDefault()
+      setErrorMessage('')
+
+      try {
+        setIsLoading(true)
+        // Signup data backend register endpoint ko bhej rahe hain.
+        const response = await signupUser({ username, email: Email, password })
+        // Agar backend username return kare to use karo, warna form wala username use karo.
+        const savedUsername = response?.data?.username || username
+
+        // Feed page par welcome text ke liye username temporarily store kar rahe hain.
+        sessionStorage.setItem('feed_username', savedUsername)
+        // Signup success ke baad direct feed page par redirect.
+        navigate('/feed', { state: { username: savedUsername } })
+      } catch (error) {
+        // Backend validation ya duplicate user message directly show kar do.
+        const message = error?.response?.data?.message || 'Signup failed'
+        setErrorMessage(message)
+      } finally {
+        setIsLoading(false)
+      }
     };
   return (
     <>
@@ -45,7 +70,15 @@ function Signup() {
             </input>
             </div>
 
-            <button className='w-full mt-4 py-3 text-black bg-red-500  font-bold tracking-wider  hover:text-white hover:bg-red-700' type='submit'>SIGNUP</button>
+            <button
+              className='w-full mt-4 py-3 text-black bg-red-500 font-bold tracking-wider hover:text-white hover:bg-red-700 disabled:opacity-60'
+              type='submit'
+              disabled={isLoading}
+            >
+              {isLoading ? 'SIGNING UP...' : 'SIGNUP'}
+            </button>
+
+            {errorMessage ? <p className='pt-2 text-sm text-rose-400'>{errorMessage}</p> : null}
         </form>
        </div>
     </div>

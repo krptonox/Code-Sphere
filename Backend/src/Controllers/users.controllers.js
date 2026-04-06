@@ -16,6 +16,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     //Step 1: Get data from user
     // Support JSON, urlencoded and multipart form-data, and tolerate common key variants from clients.
+    // Hinglish note: Frontend signup payload (username/email/password) yahan receive hota hai.
     const body = req.body || {};
     const username = String(body.username ?? body.userName ?? body.name ?? "").trim();
     const email = String(body.email ?? "").trim();
@@ -49,6 +50,7 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new ApiError(500, "User registration failed")
     }
 
+    //  Response me createdUser return kar rahe hain, jisse frontend username read kar sake.
     //Step 3: Check for user creation success and send response
     return res.status(201).json(new ApiResponse(201, createdUser, "User registered successfully"))
 });
@@ -56,8 +58,12 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const generateTokensAndSendResponse = async(userId) =>{
     try{
-      const accessToken = user.generateAccessToken();
       const user = await User.findById(userId);
+            if(!user){
+                throw new ApiError(404, "User not found")
+            }
+
+            const accessToken = user.generateAccessToken();
       const refreshToken = user.generateRefreshToken();
 
       user.refreshToken = refreshToken;
@@ -66,7 +72,7 @@ const generateTokensAndSendResponse = async(userId) =>{
       return { accessToken, refreshToken };
 
     }catch(error){
-        throw newApiError(500, "Token generation failed")
+                throw new ApiError(500, "Token generation failed")
     }
 }
 
@@ -80,13 +86,18 @@ const loginUser = asyncHandler(async (req, res) => {
       //acess token and refresh token generate karo
       //send cookie with refresh token and send access token in response
 
-      const {email, password, username} = req.body
+    // Hinglish note: Login.jsx currently email + password bhej raha hai (username optional rakha hai).
+    const {email, password, username} = req.body
 
 
       // Validate that either email or username is provided in the request body. If neither is provided, an error is thrown indicating that both fields are required. This validation ensures that the login process has sufficient information to identify the user, allowing them to log in using either their email address or their username, providing flexibility in the login process.
-      if(!email || !username){
+            if(!email && !username){
         throw new ApiError(400, "Email or username is required")
       }
+
+            if(!password){
+                throw new ApiError(400, "Password is required")
+            }
       
       // Find the user in the database using either email or username. The $or operator allows us to search for a user document that matches either the provided email or username. This is useful for allowing users to log in using either their email address or their username, providing flexibility in the login process.
       const user = await User.findOne({$or: [{email}, {username}]});
@@ -115,7 +126,8 @@ const loginUser = asyncHandler(async (req, res) => {
             secure: true, // Set to true if using HTTPS
         }
 
-        return res.status(200).cookie("acesssToken", accessToken, options).cookie("refreshToken", refreshToken, options).json(new ApiResponse(200, logedinUser, "User logged in successfully"))// This line sends a JSON response with a status code of 200 (OK) and includes the logged-in user's information (excluding the password and refresh token) in the response body. The response also includes a success message indicating that the user has logged in successfully. Additionally, the access token and refresh token are set as HTTP-only cookies in the response, allowing the client to store them securely for subsequent authenticated requests.});
+        // Hinglish note: logedinUser frontend ko milta hai, isi se Feed page ke liye username nikalte hain.
+        return res.status(200).cookie("accessToken", accessToken, options).cookie("refreshToken", refreshToken, options).json(new ApiResponse(200, logedinUser, "User logged in successfully"))// This line sends a JSON response with a status code of 200 (OK) and includes the logged-in user's information (excluding the password and refresh token) in the response body. The response also includes a success message indicating that the user has logged in successfully. Additionally, the access token and refresh token are set as HTTP-only cookies in the response, allowing the client to store them securely for subsequent authenticated requests.});
 
 
     

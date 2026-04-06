@@ -1,22 +1,15 @@
-import { useState } from 'react'
 import './App.css'
-import {Routes, Route, Navigate} from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import Home from './Pages/Home'
-import Login from './Pages/Login'
-import Signup from './Pages/Signup'
-import Jokes from './Pages/Jokes'
+import FeedPage from './Pages/FeedPage'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <Routes>
-      <Route path="/" element={<Home />}></Route>
+      <Route path='/' element={<Home />} />
+      {/* Login/Signup success ke baad user yahi feed route par land karega. */}
+      <Route path='/feed' element={<FeedPage />} />
     </Routes>
-    // <>
-    //  <Home></Home>
-    //  <Jokes></Jokes>
-    // </>
   )
 }
 

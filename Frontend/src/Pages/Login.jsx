@@ -1,13 +1,38 @@
 import React from 'react'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { loginUser } from '../services/authService'
 
 function Login() {
   const [Email,setEmail] = useState('')
   const [password,setPassword] = useState('')
-   const handleSubmit = (e) =>{
-        e.preventDefault();
-        console.log("LOGIN: ",Email +" "+ password)
-    };
+  const [isLoading, setIsLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setErrorMessage('')
+
+    try {
+      setIsLoading(true)
+      // Login data backend ko bhej rahe hain, yahin se real auth trigger hota hai.
+      const response = await loginUser({ email: Email, password })
+      // Backend ApiResponse ke data object se username nikal rahe hain.
+      const username = response?.data?.username || ''
+
+      // SessionStorage me save karne se page refresh ke baad bhi username dikhega.
+      sessionStorage.setItem('feed_username', username)
+      // Successful login ke turant baad user ko feed page par bhejna hai.
+      navigate('/feed', { state: { username } })
+    } catch (error) {
+      // Backend se jo readable message aaye, wahi UI par show karna hai.
+      const message = error?.response?.data?.message || 'Login failed'
+      setErrorMessage(message)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
   <>
@@ -36,7 +61,15 @@ function Login() {
             </input>
             </div>
 
-            <button className='w-full mt-4 py-3 text-black bg-red-500 font-bold tracking-wider  hover:text-white hover:bg-red-700' type='submit'>LOGIN</button>
+            <button
+              className='w-full mt-4 py-3 text-black bg-red-500 font-bold tracking-wider hover:text-white hover:bg-red-700 disabled:opacity-60'
+              type='submit'
+              disabled={isLoading}
+            >
+              {isLoading ? 'LOGGING IN...' : 'LOGIN'}
+            </button>
+
+            {errorMessage ? <p className='pt-2 text-sm text-rose-400'>{errorMessage}</p> : null}
         </form>
        </div>
     </div>

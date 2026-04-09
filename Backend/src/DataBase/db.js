@@ -16,6 +16,7 @@ async function connectDB() {
 
 export default connectDB;
 
+
 //why async function used?
 //The async function is used to handle asynchronous operations, such as connecting to a database. In this case, the connectDB function is declared as async because it uses the await keyword to wait for the mongoose.connect() method to complete before proceeding. This allows the function to handle the asynchronous nature of database connections and ensures that the connection is established before any further code is executed.
 

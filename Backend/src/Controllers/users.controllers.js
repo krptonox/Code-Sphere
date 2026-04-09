@@ -16,7 +16,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     //Step 1: Get data from user
     // Support JSON, urlencoded and multipart form-data, and tolerate common key variants from clients.
-    // Hinglish note: Frontend signup payload (username/email/password) yahan receive hota hai.
+    //  Frontend signup payload (username/email/password) yahan receive hota hai.
     const body = req.body || {};
     const username = String(body.username ?? body.userName ?? body.name ?? "").trim();
     const email = String(body.email ?? "").trim();
@@ -44,6 +44,7 @@ const registerUser = asyncHandler(async (req, res) => {
     });
 
     // Query with the model, not the created document instance, to avoid runtime method errors.
+    
     const createdUser = await User.findById(user._id).select("-password -refreshToken") // This line retrieves the created user from the database using their unique identifier (user._id) and excludes the password and refreshToken fields from the result. The select() method is used to specify which fields to include or exclude in the query result. In this case, it excludes the password and refreshToken fields for security reasons, ensuring that sensitive information is not sent back in the response.
 
     if(!createdUser){
@@ -86,7 +87,7 @@ const loginUser = asyncHandler(async (req, res) => {
       //acess token and refresh token generate karo
       //send cookie with refresh token and send access token in response
 
-    // Hinglish note: Login.jsx currently email + password bhej raha hai (username optional rakha hai).
+    //  Login.jsx currently email + password bhej raha hai (username optional rakha hai).
     const {email, password, username} = req.body
 
 

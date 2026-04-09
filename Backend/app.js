@@ -64,5 +64,4 @@ import userRoutes from './src/Routes/user.routes.js'
 app.use('/api/users', userRoutes)
 
 
-
 export default app

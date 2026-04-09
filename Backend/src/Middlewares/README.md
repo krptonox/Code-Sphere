@@ -1,4 +1,4 @@
-# Middlewares README (Hinglish Guide)
+# Middlewares README
 
 Yeh folder backend ka "gatekeeper" layer hai.
 Simple words me: middleware controller se pehle chalti hai aur decide karti hai request allowed hai ya block.

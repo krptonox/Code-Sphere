@@ -1,4 +1,4 @@
-# Routes README (Hinglish Guide)
+# Routes README
 
 Yeh folder backend ka "map" hai.
 Simple words me: route batata hai kaunsa URL hit hoga to kaunsa function chalega.
@@ -26,15 +26,18 @@ Route layer alag rakhne se:
 ## Current user routes (abhi kya use ho raha hai)
 
 1. `POST /api/users/register`
+
 - middleware: `multer().none()` for multipart text fields
 - controller: `registerUser`
 - use case: new account create
 
 2. `POST /api/users/login`
+
 - controller: `loginUser`
 - use case: user authentication
 
 3. `POST /api/users/logout`
+
 - middleware: `verifyJwt` (protected route)
 - controller: `logoutUser`
 - use case: session logout and token cleanup

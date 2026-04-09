@@ -1,4 +1,4 @@
-# Controllers README (Hinglish Guide)
+# Controllers README
 
 Yeh folder backend ka "dimaag" hai.
 Simple words me: route request pakadta hai, controller decide karta hai "ab kya karna hai".

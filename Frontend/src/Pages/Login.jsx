@@ -39,7 +39,7 @@ function Login() {
     <div className='h-screen flex items-center justify-center bg-gray-900'>
 
        <div className='bg-black p-8 border border-gray-700'>
-        <div className='text-5xl font-extrabold tracking-widest text-center text-white py-1'>CODE ARENA</div>
+        <div className='text-5xl font-extrabold tracking-widest text-center text-white py-1'>CODE SPHERE</div>
         <p className='text-2xl text-red-500 font-semibold tracking-wider py-4 flex justify-center items-center'>LOGIN TO YOUR ACCOUNT</p>
 
         <form className='mt-6 space-y-4' onSubmit={handleSubmit}>

@@ -19,7 +19,7 @@ function Home() {
         {/* for left side of the screen */}
         <div>
           <h1 className="text-9xl font-extrabold tracking-widest py-2">
-                  CODE ARENA
+                  CODE SPHERE
           </h1>
           <h2 className="text-3xl text-red-500 font-semibold tracking-wider">
                  ENTER THE ARENA

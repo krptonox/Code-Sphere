@@ -13,6 +13,7 @@ function FeedPage() {
     <div className='min-h-screen flex items-center justify-center bg-gray-950 px-4'>
       <div className='w-full max-w-xl rounded-2xl border border-gray-700 bg-black p-8 text-white'>
         <h1 className='text-4xl font-extrabold tracking-wider text-red-500'>FEED PAGE</h1>
+        <h2 className='text-2xl font-bold mt-4'>Hello, {username}! Work On Progress under LUCKY SHARMA Developer</h2>
         <p className='mt-4 text-gray-300'>
           {username ? `Welcome, ${username}` : 'No username found. Please login or signup first.'}
         </p>

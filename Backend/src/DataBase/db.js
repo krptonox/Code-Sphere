@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-// Resolved import error by pointing to Backend/constant.js from src/DataBase.
+
 import { DB_NAME } from "../../constant.js";
 
 

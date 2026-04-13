@@ -1,4 +1,14 @@
 import { useLocation } from 'react-router-dom'
+import { PiSphereFill } from "react-icons/pi";
+import { RiDashboard2Fill } from "react-icons/ri";
+import { FaUserFriends } from "react-icons/fa";
+import { MdGroups } from "react-icons/md";
+import { MdLeaderboard } from "react-icons/md";
+import { MdMeetingRoom } from "react-icons/md";
+import { MdIntegrationInstructions } from "react-icons/md";
+import { IoMdSettings } from "react-icons/io";
+import '../App.css'
+
 
 function FeedPage() {
   const location = useLocation()
@@ -11,17 +21,17 @@ function FeedPage() {
 
   return (
     <div className='h-screen w-screen bg-gray-900 flex items-center justify-center'>
-      <div className='h-screen w-[15%] flex flex-col items-center justify-baseline bg-gray-800 border-r border-gray-600 m-0'>
-        <h1 className='font-Segoe-UI text-white bg-gray-700 w-full h-[8%] flex items-center justify-center text-2xl border-b border-gray-600 mb-[5%]'>CodeSphere.</h1>
-        <div className='w-full h-[50%] flex flex-col items-center justify-start gap-4'>
-          <button className="w-[70%] h-[12%] hover:ring-[1px] text-gray-300 pl-[5%] focus:bg-gray-600 rounded-[5px] transition-all ease-[0.3s] hover:bg-gray-500 hover:text-white focus:border-l-[6px] focus:text-white  hover:shadow-green-600/60 border-green-600 font-google-sans-font-300 flex flex-col text-left justify-center">Dashboard</button>
-          <button className="w-[70%] h-[12%] hover:ring-[1px] text-gray-300 pl-[5%] focus:bg-gray-600 rounded-[5px] transition-all ease-[0.3s] hover:bg-gray-500 hover:text-white focus:border-l-[6px] focus:text-white  hover:shadow-green-600/60 border-green-600 font-google-sans-font-300 flex flex-col text-left justify-center">Friends</button>
-          <button className="w-[70%] h-[12%] hover:ring-[1px] text-gray-300 pl-[5%] focus:bg-gray-600 rounded-[5px] transition-all ease-[0.3s] hover:bg-gray-500 hover:text-white focus:border-l-[6px] focus:text-white  hover:shadow-green-600/60 border-green-600 font-google-sans-font-300 flex flex-col text-left justify-center">Groups</button>
-          <button className="w-[70%] h-[12%] hover:ring-[1px] text-gray-300 pl-[5%] focus:bg-gray-600 rounded-[5px] transition-all ease-[0.3s] hover:bg-gray-500 hover:text-white focus:border-l-[6px] focus:text-white  hover:shadow-green-600/60 border-green-600 font-google-sans-font-300 flex flex-col text-left justify-center">Leaderboard</button>
-          <button className="w-[70%] h-[12%] hover:ring-[1px] text-gray-300 pl-[5%] focus:bg-gray-600 rounded-[5px] transition-all ease-[0.3s] hover:bg-gray-500 hover:text-white focus:border-l-[6px] focus:text-white  hover:shadow-green-600/60 border-green-600 font-google-sans-font-300 flex flex-col text-left justify-center">Practice</button>
-          <button className="w-[70%] h-[12%] hover:ring-[1px] text-gray-300 pl-[5%] focus:bg-gray-600 rounded-[5px] transition-all ease-[0.3s] hover:bg-gray-500 hover:text-white focus:border-l-[6px] focus:text-white  hover:shadow-green-600/60 border-green-600 font-google-sans-font-300 flex flex-col text-left justify-center">Integration</button>
+      <div className='h-screen w-[15%] flex-col items-center justify-baseline bg-gray-800 border-r border-gray-600 m-0'>
+        <h1 className='font-google-sans-flex-100 text-white bg-gray-700 w-full h-[8%] flex items-center justify-center text-2xl border-b border-gray-600 mb-[5%]'><PiSphereFill className='w-[20%] h-[50%] m-0' />CodeSphere.</h1>
+        <div className='w-full h-[50%] flex flex-col items-center justify-start gap-4 overflow-clip'>
+          <button className="w-[50%] transition-all duration-300 ease-in-out hover:w-[60%] focus:w-[65%] h-[10%] p-[5%] bg-gray-700 hover:bg-gray-600 focus:bg-gray-500 flex items-center justify-evenly rounded-[50px] text-white font-[google-sans-flex-100"><RiDashboard2Fill />Dashboard</button>
+          <button className="w-[50%] transition-all duration-300 ease-in-out hover:w-[60%] focus:w-[65%] h-[10%] p-[5%] bg-gray-700 hover:bg-gray-600 focus:bg-gray-500 flex items-center justify-evenly rounded-[50px] text-white font-[google-sans-flex-100]"><FaUserFriends />Friends</button>
+          <button className="w-[50%] transition-all duration-300 ease-in-out hover:w-[60%] focus:w-[65%] h-[10%] p-[5%] bg-gray-700 hover:bg-gray-600 focus:bg-gray-500 flex items-center justify-evenly rounded-[50px] text-white font-[google-sans-flex-100]"><MdGroups />Groups</button>
+          <button className="w-[50%] transition-all duration-300 ease-in-out hover:w-[60%] focus:w-[65%] h-[10%] p-[5%] bg-gray-700 hover:bg-gray-600 focus:bg-gray-500 flex items-center justify-evenly rounded-[50px] text-white font-[google-sans-flex-100]"><MdLeaderboard />Leaderboard</button>
+          <button className="w-[50%] transition-all duration-300 ease-in-out hover:w-[60%] focus:w-[65%] h-[10%] p-[5%] bg-gray-700 hover:bg-gray-600 focus:bg-gray-500 flex items-center justify-evenly rounded-[50px] text-white font-[google-sans-flex-100]"><MdMeetingRoom />Practice</button>
+          <button className="w-[50%] transition-all duration-300 ease-in-out hover:w-[60%] focus:w-[65%] h-[10%] p-[5%] bg-gray-700 hover:bg-gray-600 focus:bg-gray-500 flex items-center justify-evenly rounded-[50px] text-white font-[google-sans-flex-100]"><MdIntegrationInstructions />Integration</button>
           <div className='h-px w-[90%] bg-gray-400'></div>
-          <button className="w-[70%] h-[12%] text-gray-300 pl-[5%] focus:bg-gray-600 rounded-[5px] transition-all ease-[0.3s] hover:bg-gray-500 hover:text-white focus:border-l-8 focus:text-white border-green-600 font-google-sans-font-300 flex flex-col text-left justify-center">Settings</button>
+          <button className="w-[50%] transition-all duration-300 ease-in-out hover:w-[60%] focus:w-[65%] h-[10%] p-[5%] bg-gray-700 hover:bg-gray-600 focus:bg-gray-500 flex items-center justify-evenly rounded-[50px] text-white font-[google-sans-flex-100]"><IoMdSettings />Settings</button>
         </div>
       </div>
       <div className='h-screen w-[85%] flex flex-col items-center justify-center'></div>

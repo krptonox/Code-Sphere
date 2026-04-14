@@ -127,8 +127,11 @@ const loginUser = asyncHandler(async (req, res) => {
             secure: true, // Set to true if using HTTPS
         }
 
-        // Hinglish note: logedinUser frontend ko milta hai, isi se Feed page ke liye username nikalte hain.
-        return res.status(200).cookie("accessToken", accessToken, options).cookie("refreshToken", refreshToken, options).json(new ApiResponse(200, logedinUser, "User logged in successfully"))// This line sends a JSON response with a status code of 200 (OK) and includes the logged-in user's information (excluding the password and refresh token) in the response body. The response also includes a success message indicating that the user has logged in successfully. Additionally, the access token and refresh token are set as HTTP-only cookies in the response, allowing the client to store them securely for subsequent authenticated requests.});
+        //logedinUser frontend ko milta hai, isi se Feed page ke liye username nikalte hain.
+        return res.status(200)
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
+        .json(new ApiResponse(200, logedinUser, "User logged in successfully"))// This line sends a JSON response with a status code of 200 (OK) and includes the logged-in user's information (excluding the password and refresh token) in the response body. The response also includes a success message indicating that the user has logged in successfully. Additionally, the access token and refresh token are set as HTTP-only cookies in the response, allowing the client to store them securely for subsequent authenticated requests.});
 
 
     

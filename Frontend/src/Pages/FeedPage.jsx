@@ -5,12 +5,14 @@ function FeedPage() {
 
   // 1st priority: navigate state se username (fresh login/signup ke turant baad).
   const usernameFromState = location.state?.username
+  
   // 2nd priority: sessionStorage fallback (refresh ke baad bhi value rahe).
   const usernameFromStorage = sessionStorage.getItem('feed_username')
   const username = usernameFromState || usernameFromStorage || ''
 
   return (
     <div className='h-screen w-screen bg-gray-900 flex items-center justify-center'>
+      
       <div className='h-screen w-[15%] flex flex-col items-center justify-baseline bg-gray-800 border-r border-gray-600 m-0'>
         <h1 className='font-Segoe-UI text-white bg-gray-700 w-full h-[8%] flex items-center justify-center text-2xl border-b border-gray-600 mb-[5%]'>CodeSphere.</h1>
         <div className='w-full h-[50%] flex flex-col items-center justify-start gap-4'>

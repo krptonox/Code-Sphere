@@ -51,8 +51,6 @@ userSchema.methods.generateAccessToken = function() {
 userSchema.methods.generateRefreshToken = function() {
     return jwt.sign({
         id:this._id,
-        email:this.email,
-        username:this.username 
       },
       process.env.REFRESH_TOKEN_SECRET,
       {

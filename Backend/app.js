@@ -21,8 +21,9 @@ app.use(express.static('public'))//express.static() is a built-in middleware fun
 app.use(cookieParser())//cookieParser() is a middleware function that parses cookies attached to the client request object. It populates the req.cookies object with the parsed cookies, allowing you to easily access and manipulate cookie data in your route handlers. This is particularly useful for handling user sessions, authentication, and other features that rely on cookies for storing information on the client side.
 
 
-app.get('/', (req, res) => {  //app.get() is used to handle GET requests to the specified route ('/'). It takes a callback function with two parameters: req (the request object) and res (the response object). In this case, when a GET request is made to the root route ('/'), the server responds with 'Code Arena'.
-    res.send('Code Arena')
+
+app.get('/', (req, res) => {  //app.get() is used to handle GET requests to the specified route ('/'). It takes a callback function with two parameters: req (the request object) and res (the response object). In this case, when a GET request is made to the root route ('/'), the server responds with 'Code Sphere'.
+    res.send('Code Sphere')
 })
 
 app.get('/api/jokes', (req, res) => {
@@ -56,7 +57,7 @@ app.get('/api/jokes', (req, res) => {
     res.send(jokes)
 })
 
-
+ 
 //routes import 
 import userRoutes from './src/Routes/user.routes.js'
 

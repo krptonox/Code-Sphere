@@ -16,17 +16,16 @@ function Login() {
 
     try {
       setIsLoading(true)
-      // Login data backend ko bhej rahe hain, yahin se real auth trigger hota hai.
+
       const response = await loginUser({ email: Email, password })
-      // Backend ApiResponse ke data object se username nikal rahe hain.
+
       const username = response?.data?.username || ''
 
-      // SessionStorage me save karne se page refresh ke baad bhi username dikhega.
       sessionStorage.setItem('feed_username', username)
-      // Successful login ke turant baad user ko feed page par bhejna hai.
+
       navigate('/feed', { state: { username } })
     } catch (error) {
-      // Backend se jo readable message aaye, wahi UI par show karna hai.
+      
       const message = error?.response?.data?.message || 'Login failed'
       setErrorMessage(message)
     } finally {
@@ -66,6 +65,8 @@ function Login() {
               type='submit'
               disabled={isLoading}
             >
+
+              
               {isLoading ? 'LOGGING IN...' : 'LOGIN'}
             </button>
 

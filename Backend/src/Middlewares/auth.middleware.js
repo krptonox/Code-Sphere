@@ -4,7 +4,8 @@ import jwt from 'jsonwebtoken';
 import { User } from '../Models/Users/users.model.js';
 const verifyJwt = asyncHandler(async (req,_,next) => {
     try {
-        const token = req.cookies?.accessToken || req.headers("Authorization")?.replace("Bearer ","");
+        const authorizationHeader = req.get("Authorization") || req.headers.authorization;
+        const token = req.cookies?.accessToken || authorizationHeader?.replace("Bearer ", "");
     
         if(!token){
             throw new ApiError(401, "Unauthorized")
@@ -21,6 +22,10 @@ const verifyJwt = asyncHandler(async (req,_,next) => {
         req.user = user;
         next();
     } catch (error) {
+        if (error instanceof ApiError) {
+            throw error;
+        }
+
         throw new ApiError(401, "Invalid access token")
     }
 })

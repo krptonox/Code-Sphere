@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import Login from './Login'
 import Signup from './Signup'
+import FeedPage from './FeedPage'
 
 function Home() {
   const [LoginPage,setLoginPage] = useState(true)
@@ -13,10 +14,10 @@ function Home() {
     <>
     <div className='w-full h-screen bg-linear-to-r from-gray-900 via-gray-800 to-gray-900'>
        <div className='flex flex-row w-full h-screen'>
-        {/* Screen div  */}
+        
         
       <div className='w-1/2 max-h-screen bg-black text-white flex flex-col justify-start gap-8 z-2 p-[5%]'>
-        {/* for left side of the screen */}
+     
         <div>
           <h1 className="text-9xl font-extrabold tracking-widest py-2">
                   CODE SPHERE
@@ -41,22 +42,21 @@ function Home() {
           <button className='px-8 py-3 border border-red-600 text-red-500 font-bold tracking-widest hover:bg-red-600 hover:text-black transition' onClick={() => setLoginPage(true)}>
             LOGIN
           </button>
+
         </div>
       </div>
+      
       <div className='w-4 bg-white'>
-        {/* for the tilted line in center */}
+  
       </div>
       <div className='w-4 bg-red-600 '>
-        {/* for the tilted line in center */}
+
       </div>
 
 
       <div className='w-1/2 max-h-screen bg-gray-900 text-white flex flex-col justify-center'>
-        {/* for right side of the screen */}
-           <div>
-         {/* Login  and signup page */}
+
           {LoginPage ? <Login></Login> : <Signup></Signup>}
-       </div>
       </div>
       
     </div>

@@ -1,17 +1,4 @@
-// const asyncHandler = (fn) => async (req, res, next) => {
-//     try{
-//       await fn(req,res,next)
-//     } catch(err){
-//         res.status(err.code || 500).json({message:"Internal Server Error"})
-//     }
-// }
-
 import { request } from "express";
-
-//this is try catch block for handling errors in asynchronous functions. It is a common pattern used in Express.js applications to catch and handle errors that may occur during the execution of asynchronous route handlers or middleware functions.
-
-
-//We will do using Promise and .then() and .catch() instead of async await and try catch block because it is more cleaner and easier to read.
 
 const asyncHandler = (requestHandler) => {
     return (req, res, next) => {

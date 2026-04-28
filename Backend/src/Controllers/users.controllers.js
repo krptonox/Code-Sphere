@@ -42,10 +42,8 @@ const registerUser = asyncHandler(async (req, res) => {
         email,
         password
     });
-
-    // Query with the model, not the created document instance, to avoid runtime method errors.
     
-    const createdUser = await User.findById(user._id).select("-password -refreshToken") // This line retrieves the created user from the database using their unique identifier (user._id) and excludes the password and refreshToken fields from the result. The select() method is used to specify which fields to include or exclude in the query result. In this case, it excludes the password and refreshToken fields for security reasons, ensuring that sensitive information is not sent back in the response.
+    const createdUser = await User.findById(user._id).select("-password -refreshToken") 
 
     if(!createdUser){
         throw new ApiError(500, "User registration failed")
@@ -91,7 +89,6 @@ const loginUser = asyncHandler(async (req, res) => {
     const {email, password, username} = req.body
 
 
-      // Validate that either email or username is provided in the request body. If neither is provided, an error is thrown indicating that both fields are required. This validation ensures that the login process has sufficient information to identify the user, allowing them to log in using either their email address or their username, providing flexibility in the login process.
             if(!email && !username){
         throw new ApiError(400, "Email or username is required")
       }
@@ -99,16 +96,13 @@ const loginUser = asyncHandler(async (req, res) => {
             if(!password){
                 throw new ApiError(400, "Password is required")
             }
-      
-      // Find the user in the database using either email or username. The $or operator allows us to search for a user document that matches either the provided email or username. This is useful for allowing users to log in using either their email address or their username, providing flexibility in the login process.
+
       const user = await User.findOne({$or: [{email}, {username}]});
 
       if(!user){
         throw new ApiError(404, "User not found")
       }
 
-
-      // Compare the provided password with the hashed password stored in the database using the isPasswordCorrect method defined in the user schema. This method uses bcrypt to securely compare the plaintext password with the hashed password. If the passwords do not match, an error is thrown indicating that the password is incorrect.
       const isPasswordCorrect = await user.isPasswordCorrect(password);
 
       if(!isPasswordCorrect){
@@ -116,7 +110,6 @@ const loginUser = asyncHandler(async (req, res) => {
       }
 
      const { accessToken, refreshToken } = await generateTokensAndSendResponse(user._id);
-        // Set the refresh token in an HTTP-only cookie to enhance security by preventing client-side scripts from accessing the token. The cookie is configured with a max age of 7 days (7 * 24 * 60 * 60 * 1000 milliseconds) and is marked as secure, meaning it will only be sent over HTTPS connections. This approach helps protect the refresh token from potential cross-site scripting (XSS) attacks and ensures that it is transmitted securely between the client and server.
 
         const logedinUser = await User.findByIdAndUpdate(user._id, {
             refreshToken: refreshToken
@@ -124,26 +117,22 @@ const loginUser = asyncHandler(async (req, res) => {
 
         const options = {
             httpOnly: true,
-            secure: true, // Set to true if using HTTPS
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            path: "/",
         }
 
         //logedinUser frontend ko milta hai, isi se Feed page ke liye username nikalte hain.
         return res.status(200)
         .cookie("accessToken", accessToken, options)
         .cookie("refreshToken", refreshToken, options)
-        .json(new ApiResponse(200, logedinUser, "User logged in successfully"))// This line sends a JSON response with a status code of 200 (OK) and includes the logged-in user's information (excluding the password and refresh token) in the response body. The response also includes a success message indicating that the user has logged in successfully. Additionally, the access token and refresh token are set as HTTP-only cookies in the response, allowing the client to store them securely for subsequent authenticated requests.});
+        .json(new ApiResponse(200, logedinUser, "User logged in successfully"))
 
 
     
     });
 
 const logoutUser = asyncHandler(async (req, res) => {
-     //STEPS TO LOGOUT USER
-    //get refresh token from cookie
-    //find user with refresh token in database
-    //if user not found then throw error
-    //if user found then remove refresh token from database
-    //clear cookie from response
     
   await User.findByIdAndUpdate(req.user._id, {
         $set: { refreshToken: "" }
@@ -151,7 +140,9 @@ const logoutUser = asyncHandler(async (req, res) => {
 
     const options = {
         httpOnly: true,
-        secure: true, // Set to true if using HTTPS
+        secure: process.env.NODE_ENV === "production", 
+        sameSite: "lax",
+        path: "/",
     }
 
     return res.status(200)
@@ -161,4 +152,16 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 });
 
-export { registerUser, loginUser, logoutUser };
+const getAllUsers = asyncHandler(async (req, res) => {
+    const currentUserId = req.user?._id;
+
+    const users = await User.find({ _id: { $ne: currentUserId } })
+        .select("_id username email")
+        .sort({ username: 1 });
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, users, "Users fetched successfully"));
+});
+
+export { registerUser, loginUser, logoutUser, getAllUsers };

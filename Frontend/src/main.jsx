@@ -5,7 +5,6 @@ import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    {/* Fix: Routes/useRoutes in App need Router context from BrowserRouter. */}
     <BrowserRouter>
       <App />
     </BrowserRouter>

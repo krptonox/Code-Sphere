@@ -17,17 +17,16 @@ function Signup() {
 
       try {
         setIsLoading(true)
-        // Signup data backend register endpoint ko bhej rahe hain.
+      
         const response = await signupUser({ username, email: Email, password })
-        // Agar backend username return kare to use karo, warna form wala username use karo.
+      
         const savedUsername = response?.data?.username || username
 
-        // Feed page par welcome text ke liye username temporarily store kar rahe hain.
         sessionStorage.setItem('feed_username', savedUsername)
-        // Signup success ke baad direct feed page par redirect.
+       
         navigate('/feed', { state: { username: savedUsername } })
       } catch (error) {
-        // Backend validation ya duplicate user message directly show kar do.
+      
         const message = error?.response?.data?.message || 'Signup failed'
         setErrorMessage(message)
       } finally {

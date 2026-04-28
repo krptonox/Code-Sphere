@@ -1,14 +1,18 @@
 import './App.css'
-import { Routes, Route } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import Home from './Pages/Home'
 import FeedPage from './Pages/FeedPage'
+import Group from './application/Group'
+import Friends from './application/Friends'
 
 function App() {
   return (
     <Routes>
       <Route path='/' element={<Home />} />
-      {/* Login/Signup success ke baad user yahi feed route par land karega. */}
       <Route path='/feed' element={<FeedPage />} />
+      <Route path='/friends' element={<Friends />} />
+      <Route path='/groups' element={<Group />} />
+      <Route path='*' element={<Navigate to='/' replace />} />
     </Routes>
   )
 }
